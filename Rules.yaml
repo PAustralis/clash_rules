@@ -133,7 +133,7 @@ rules:
   - RULE-SET,OpenAI,🤖 AI
   - RULE-SET,Gemini,🤖 AI
   - RULE-SET,Claude,🤖 AI
-  - RULE-SET,My_OpenRouter,🤖 AI
+  - RULE-SET,OpenRouter,🤖 AI
   - RULE-SET,OKX,🪙 OKX
   - RULE-SET,Google,🔍️ Google
   - RULE-SET,GoogleFCM,📢 GoogleFCM
