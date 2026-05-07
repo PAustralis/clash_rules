@@ -100,7 +100,7 @@ rule-providers:
   Telegram: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list", interval: 86400, path: ./rp/tg.yaml}
   Speedtest: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest.list", interval: 86400, path: ./rp/st.yaml}
   Steam: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list", interval: 86400, path: ./rp/stm.yaml}
-  Game: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.list", interval: 86400, path: ./rp/gm.yaml}
+  Game: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.list", interval: 86400, path: ./rp/game.yaml}
   YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list", interval: 86400, path: ./rp/ytb.yaml}
   Bahamut: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.list", interval: 86400, path: ./rp/baha.yaml}
   BiliBili: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.list", interval: 86400, path: ./rp/bili.yaml}
