@@ -2,19 +2,19 @@
 proxy-providers:
   GLaDOS:
     type: http
-    url: "你的URL"
+    url: "GLaDOS_URL"
     interval: 86400
     path: ./proxy-providers/glados.yaml
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
   TAG:
     type: http
-    url: "你的URL"
+    url: "TAG_URL"
     interval: 86400
     path: ./proxy-providers/tag.yaml
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
   Mojie:
     type: http
-    url: "你的URL"
+    url: "Mojie_URL"
     interval: 86400
     path: ./proxy-providers/mojie.yaml
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
