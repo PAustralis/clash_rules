@@ -14,7 +14,7 @@ proxy-providers:
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
   Mojie:
     type: http
-    url: "Mojie_URL"
+    url: "Mojie_URL&flag=clash"
     interval: 86400
     path: ./proxy-providers/mojie.yaml
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
