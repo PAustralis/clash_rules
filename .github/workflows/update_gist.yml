@@ -14,13 +14,19 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Generate Final Config
-        run: |
-          cp Rules.yaml final_config.yaml
-          sed -i "s|url: \"GLaDOS_URL\"|url: \"${{ secrets.SUB_GLADOS }}\"|g" final_config.yaml
-          sed -i "s|url: \"TAG_URL\"|url: \"${{ secrets.SUB_TAG }}\"|g" final_config.yaml
-          sed -i "s|url: \"Mojie_URL\"|url: \"${{ secrets.SUB_MOJIE }}\"|g" final_config.yaml
+      run: |
+        cp Rules.yaml final_config.yaml
+        # 1. 先对 Secret 进行转义处理，防止其中的 & 符号搞乱 sed 命令
+        ESC_GLADOS=$(echo "${{ secrets.SUB_GLADOS }}" | sed 's/&/\\&/g')
+        ESC_TAG=$(echo "${{ secrets.SUB_TAG }}" | sed 's/&/\\&/g')
+        ESC_MOJIE=$(echo "${{ secrets.SUB_MOJIE }}" | sed 's/&/\\&/g')
 
-      - name: Update Gist
+        # 2. 执行替换（注意：你的 Rules.yaml 里的占位符要和这里匹配）
+        sed -i "s|你的GLaDOS_URL|$ESC_GLADOS|g" final_config.yaml
+        sed -i "s|你的TAG_URL|$ESC_TAG|g" final_config.yaml
+        sed -i "s|你的Mojie_URL|$ESC_MOJIE|g" final_config.yaml
+        
+        - name: Update Gist
         run: |
           python3 -c "
           import os, json, requests
