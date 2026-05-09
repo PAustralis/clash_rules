@@ -1,0 +1,43 @@
+name: Update Config Gist
+
+on:
+  push:
+    paths:
+      - 'Rules.yaml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Generate Final Config
+        run: |
+          cp Rules.yaml final_config.yaml
+          # 使用 sed 替换占位符，注意这里对应的是你 Rules.yaml 里的中文占位符
+          sed -i "s|url: \"你的GLaDOS_URL\"|url: \"${{ secrets.SUB_GLADOS }}\"|g" final_config.yaml
+          sed -i "s|url: \"你的TAG_URL\"|url: \"${{ secrets.SUB_TAG }}\"|g" final_config.yaml
+          sed -i "s|url: \"你的Mojie_URL\"|url: \"${{ secrets.SUB_MOJIE }}\"|g" final_config.yaml
+
+      - name: Update Gist
+        run: |
+          python3 -c "
+          import os, json, requests
+          gist_id = os.getenv('GIST_ID')
+          token = os.getenv('GIST_TOKEN')
+          with open('final_config.yaml', 'r') as f:
+              content = f.read()
+          headers = {'Authorization': f'token {token}', 'Accept': 'application/vnd.github.v3+json'}
+          data = {'files': {'config.yaml': {'content': content}}}
+          r = requests.patch(f'https://api.github.com/gists/{gist_id}', headers=headers, data=json.dumps(data))
+          if r.status_code == 200:
+              print('Success!')
+          else:
+              print(f'Error: {r.status_code}, {r.text}')
+              exit(1)
+          "
+        env:
+          GIST_ID: ${{ secrets.GIST_ID }}
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
