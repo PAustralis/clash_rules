@@ -16,10 +16,9 @@ jobs:
       - name: Generate Final Config
         run: |
           cp Rules.yaml final_config.yaml
-          # 使用 sed 替换占位符，注意这里对应的是你 Rules.yaml 里的中文占位符
-          sed -i "s|url: \"你的GLaDOS_URL\"|url: \"${{ secrets.SUB_GLADOS }}\"|g" final_config.yaml
-          sed -i "s|url: \"你的TAG_URL\"|url: \"${{ secrets.SUB_TAG }}\"|g" final_config.yaml
-          sed -i "s|url: \"你的Mojie_URL\"|url: \"${{ secrets.SUB_MOJIE }}\"|g" final_config.yaml
+          sed -i "s|url: \"GLaDOS_URL\"|url: \"${{ secrets.SUB_GLADOS }}\"|g" final_config.yaml
+          sed -i "s|url: \"TAG_URL\"|url: \"${{ secrets.SUB_TAG }}\"|g" final_config.yaml
+          sed -i "s|url: \"Mojie_URL\"|url: \"${{ secrets.SUB_MOJIE }}\"|g" final_config.yaml
 
       - name: Update Gist
         run: |
