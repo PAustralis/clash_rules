@@ -27,7 +27,6 @@ dns:
     - https://1.1.1.1/dns-query
   nameserver-policy:
     "geosite:cn": [223.5.5.5, 119.29.29.29]
-    "geosite:derp": [223.5.5.5, 119.29.29.29]
     
 # 订阅源
 proxy-providers:
