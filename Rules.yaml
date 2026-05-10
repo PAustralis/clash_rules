@@ -12,7 +12,6 @@ sniffer:
   sniff:
     TLS: {ports: [443, 8443]}
     HTTP: {ports: [80, 8080-8880]}
-    QUIC: {ports: [443, 8443]}
 dns:
   enable: true
   ipv6: false
@@ -25,8 +24,6 @@ dns:
   fallback:
     - https://dns.google/dns-query
     - https://1.1.1.1/dns-query
-  nameserver-policy:
-    "geosite:cn": [223.5.5.5, 119.29.29.29]
     
 # 订阅源
 proxy-providers:
@@ -148,7 +145,6 @@ rule-providers:
 
 # 规则
 rules:
-  - DST-PORT,443,REJECT,udp
   - RULE-SET,LAN,🎯 全球直连
   - RULE-SET,LocalAreaNetwork,🎯 全球直连
   - RULE-SET,Direct,🎯 全球直连
