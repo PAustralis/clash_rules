@@ -2,22 +2,43 @@
 mixed-port: 7890
 allow-lan: true
 log-level: info
+external-controller: '127.0.0.1:9090'
 ipv6: false
 unified-delay: true
 profile:
   store-selected: true
   store-fake-ip: true
+cfw-bypass:
+  - localhost
+  - '127.*'
+  - '10.*'
+  - '172.16.*'
+  - '172.17.*'
+  - '172.18.*'
+  - '172.19.*'
+  - '172.20.*'
+  - '172.21.*'
+  - '172.22.*'
+  - '172.23.*'
+  - '172.24.*'
+  - '172.25.*'
+  - '172.26.*'
+  - '172.27.*'
+  - '172.28.*'
+  - '172.29.*'
+  - '172.30.*'
+  - '172.31.*'
+  - '192.168.*'
+  - '<local>'
 sniffer:
   enable: true
-  force-domain:
-    - '+'
-  skip-domain:
-    - 'Mijia Cloud'
-    - '*.apple.com'
   sniff:
     tls: {ports: [443, 8443]}
     http: {ports: [80, 8080-8880]}
-    quic: {ports: [443, 4433] 
+    quic: {ports: [443, 8443]}
+hosts:
+  'mtalk.google.com': 108.177.125.188
+  'tagss.pro': 104.26.4.238
 dns:
   enable: true
   ipv6: false
@@ -46,12 +67,15 @@ dns:
     - 'time.*.edu.cn'
     - 'ntp.*.com'
     - 'pool.ntp.org'
+    - 'doh.pub'
+    - 'dns.pub'
+    - 'dot.pub'
     - 223.5.5.5
     - 119.29.29.29
     - 8.8.8.8
   nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
   fallback:
     - https://dns.google/dns-query
     - https://1.1.1.1/dns-query
@@ -60,6 +84,8 @@ dns:
     geoip-code: CN
     ipcidr:
       - 240.0.0.0/4
+  nameserver-policy:
+    "geosite:cn": [https://223.5.5.5/dns-query, 223.5.5.5]
     
 # 订阅源
 proxy-providers:
@@ -178,6 +204,7 @@ rule-providers:
 # 规则
 rules:
   - AND,(NETWORK,udp),(DST-PORT,443),REJECT
+  - DOMAIN,rama991.siamparagon.org,DIRECT
   - RULE-SET,Privacy,REJECT
   - RULE-SET,LAN,🎯 全球直连
   - RULE-SET,Direct,🎯 全球直连
@@ -204,7 +231,7 @@ rules:
   - RULE-SET,ChinaMedia,🌏 国内媒体
   - RULE-SET,GlobalMedia,🌍 国外媒体
   - RULE-SET,Proxy,🚀 节点选择
-  - RULE-SET,GFW🚀 节点选择
+  - RULE-SET,GFW,🚀 节点选择
   - RULE-SET,Download,🎯 全球直连
   - RULE-SET,China,🎯 全球直连
   - GEOSITE,CN,🎯 全球直连
