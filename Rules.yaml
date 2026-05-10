@@ -149,7 +149,7 @@ rule-providers:
 
 # 规则
 rules:
-  - AND,((PROTOCOL,UDP),(DEST-PORT,443)),REJECT
+  - DST-PORT,443,REJECT,udp
   - RULE-SET,LAN,🎯 全球直连
   - RULE-SET,LocalAreaNetwork,🎯 全球直连
   - RULE-SET,Direct,🎯 全球直连
