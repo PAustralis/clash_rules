@@ -119,7 +119,7 @@ rule-providers:
   OpenAI: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml", interval: 86400, path: ./rp/ai.yaml}
   Gemini: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml", interval: 86400, path: ./rp/gem.yaml}
   Claude: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml", interval: 86400, path: ./rp/cld.yaml}
-  OpenRouter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/refs/heads/main/Openrouter.yaml", interval: 86400, path: ./rp/mop.yaml}
+  OpenRouter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/Openrouter.yaml", interval: 86400, path: ./rp/mop.yaml}
   OKX: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OKX/OKX.yaml", interval: 86400, path: ./rp/okx.yaml}
   Google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml", interval: 86400, path: ./rp/goog.yaml}
   GoogleFCM: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.yaml", interval: 86400, path: ./rp/fcm.yaml}
