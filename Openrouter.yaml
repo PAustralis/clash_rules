@@ -1,0 +1,4 @@
+payload:
+  - DOMAIN-KEYWORD,openrouter
+  - DOMAIN-SUFFIX,openrouter.ai
+  - DOMAIN-SUFFIX,api.openrouter.ai
