@@ -25,6 +25,9 @@ dns:
   fallback:
     - https://dns.google/dns-query
     - https://1.1.1.1/dns-query
+  nameserver-policy:
+    "geosite:cn": [223.5.5.5, 119.29.29.29]
+    "geosite:derp": [223.5.5.5, 119.29.29.29]
     
 # 订阅源
 proxy-providers:
@@ -66,6 +69,7 @@ proxy-groups:
     exclude-filter: "(?i)深港|家宽|游戏|剩余|流量|0.5|0.5倍|0.5x|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x"
     url: http://cp.cloudflare.com/generate_204
     interval: 300
+    lazy: true
 
   - name: 🇨🇳 台湾故转
     type: fallback
@@ -74,6 +78,7 @@ proxy-groups:
     exclude-filter: "(?i)家宽|游戏|剩余|流量|0.5|0.5倍|0.5x|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x"
     url: http://cp.cloudflare.com/generate_204
     interval: 300
+    lazy: true
 
   - name: 🇯🇵 日本故转
     type: fallback
@@ -82,15 +87,16 @@ proxy-groups:
     exclude-filter: "(?i)家宽|游戏|剩余|流量|0.5|0.5倍|0.5x|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x"
     url: http://cp.cloudflare.com/generate_204
     interval: 300
+    lazy: true
 
   # 业务组
   - {name: 🚀 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 🚀 手动切换, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🏡 家宽节点, DIRECT]}
   - {name: ♻️ Speedtest, type: select, proxies: [🎯 全球直连, 🚀 节点选择, 🚀 手动切换]}
   - {name: 🏗️ GitHub, type: select, proxies: [🚀 节点选择, 🎯 全球直连, 🇺🇲 美国节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🏡 家宽节点, 🚀 手动切换]}
-  - {name: 🤖 AI, type: select, proxies: [🏡 家宽节点, 🇺🇲 美国节点, 🚀 节点选择, 🇸🇬 狮城节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🚀 手动切换, 🎯 全球直连]}
+  - {name: 🤖 AI, type: select, proxies: [🏡 家宽节点, 🇺🇲 美国节点, 🚀 节点选择, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🚀 手动切换, 🎯 全球直连]}
   - {name: 🌍 国外媒体, type: select, proxies: [🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🚀 节点选择, 🎥 奈飞节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 🏡 家宽节点, 🚀 手动切换, DIRECT]}
   - {name: 🌏 国内媒体, type: select, proxies: [🎯 全球直连, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🚀 手动切换]}
-  - {name: 🪙 OKX, type: select, proxies: [🏡 家宽节点, 🇺🇲 美国节点, 🚀 节点选择, 🇸🇬 狮城节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🚀 手动切换, 🎯 全球直连]}
+  - {name: 🪙 OKX, type: select, proxies: [🏡 家宽节点, 🚀 节点选择, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🚀 手动切换, 🎯 全球直连]}
   - {name: 🔍️ Google, type: select, proxies: [🚀 节点选择, 🇸🇬 狮城节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🏡 家宽节点, 🚀 手动切换, 🎯 全球直连]}
   - {name: 📢 GoogleFCM, type: select, proxies: [🚀 节点选择, 🎯 全球直连, 🇺🇲 美国节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🏡 家宽节点, 🚀 手动切换]}
   - {name: 🔍️ Copilot, type: select, proxies: [🚀 节点选择, 🎯 全球直连, 🇺🇲 美国节点, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🏡 家宽节点, 🚀 手动切换]}
