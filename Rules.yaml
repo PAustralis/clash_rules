@@ -110,38 +110,38 @@ proxy-groups:
   
 # 规则集
 rule-providers:
-  LAN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.list", interval: 86400, path: ./rp/lan.yaml}
-  LocalAreaNetwork: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/LocalAreaNetwork.list", interval: 86400, path: ./rp/local.yaml}
-  Direct: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.list", interval: 86400, path: ./rp/direct.yaml}
-  GoogleCN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/GoogleCN.list", interval: 86400, path: ./rp/gcn.yaml}
-  SteamCN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.list", interval: 86400, path: ./rp/scn.yaml}
-  GitHub: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list", interval: 86400, path: ./rp/gh.yaml}
-  OpenAI: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list", interval: 86400, path: ./rp/ai.yaml}
-  Gemini: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.list", interval: 86400, path: ./rp/gem.yaml}
-  Claude: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.list", interval: 86400, path: ./rp/cld.yaml}
-  OpenRouter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/refs/heads/main/Openrouter.list", interval: 86400, path: ./rp/mop.yaml}
-  OKX: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OKX/OKX.list", interval: 86400, path: ./rp/okx.yaml}
-  Google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list", interval: 86400, path: ./rp/goog.yaml}
-  GoogleFCM: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.list", interval: 86400, path: ./rp/fcm.yaml}
-  Bing: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.list", interval: 86400, path: ./rp/bing.yaml}
-  OneDrive: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.list", interval: 86400, path: ./rp/od.yaml}
-  Microsoft: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list", interval: 86400, path: ./rp/ms.yaml}
-  Apple: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list", interval: 86400, path: ./rp/app.yaml}
-  Telegram: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list", interval: 86400, path: ./rp/tg.yaml}
-  Speedtest: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest.list", interval: 86400, path: ./rp/st.yaml}
-  Steam: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list", interval: 86400, path: ./rp/stm.yaml}
-  Game: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.list", interval: 86400, path: ./rp/game.yaml}
-  YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list", interval: 86400, path: ./rp/ytb.yaml}
-  Bahamut: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.list", interval: 86400, path: ./rp/baha.yaml}
-  BiliBili: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.list", interval: 86400, path: ./rp/bili.yaml}
-  BiliBiliIntl: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/BiliBiliIntl/BiliBiliIntl.list", interval: 86400, path: ./rp/bilii.yaml}
-  ChinaMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.list", interval: 86400, path: ./rp/cm.yaml}
-  GlobalMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list", interval: 86400, path: ./rp/gm.yaml}
-  ProxyList: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.list", interval: 86400, path: ./rp/proxy.yaml}
-  ChinaDomain: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/ChinaDomain.list", interval: 86400, path: ./rp/cdn.yaml}
-  ChinaCompanyIp: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/ChinaCompanyIp.list", interval: 86400, path: ./rp/ccip.yaml}
-  Download: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Download/Download.list", interval: 86400, path: ./rp/dl.yaml}
-  China: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.list", interval: 86400, path: ./rp/china.yaml}
+  LAN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/BlackMatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml", interval: 86400, path: ./rp/lan.yaml}
+  LocalAreaNetwork: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/LocalAreaNetwork.list", interval: 86400, path: ./rp/local.yaml, format: text}
+  Direct: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml", interval: 86400, path: ./rp/direct.yaml}
+  GoogleCN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/GoogleCN.list", interval: 86400, path: ./rp/gcn.yaml, format: text}
+  SteamCN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml", interval: 86400, path: ./rp/scn.yaml}
+  GitHub: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml", interval: 86400, path: ./rp/gh.yaml}
+  OpenAI: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml", interval: 86400, path: ./rp/ai.yaml}
+  Gemini: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml", interval: 86400, path: ./rp/gem.yaml}
+  Claude: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml", interval: 86400, path: ./rp/cld.yaml}
+  OpenRouter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/refs/heads/main/Openrouter.yaml", interval: 86400, path: ./rp/mop.yaml}
+  OKX: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OKX/OKX.yaml", interval: 86400, path: ./rp/okx.yaml}
+  Google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml", interval: 86400, path: ./rp/goog.yaml}
+  GoogleFCM: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.yaml", interval: 86400, path: ./rp/fcm.yaml}
+  Bing: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.yaml", interval: 86400, path: ./rp/bing.yaml}
+  OneDrive: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.yaml", interval: 86400, path: ./rp/od.yaml}
+  Microsoft: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml", interval: 86400, path: ./rp/ms.yaml}
+  Apple: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml", interval: 86400, path: ./rp/app.yaml}
+  Telegram: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml", interval: 86400, path: ./rp/tg.yaml}
+  Speedtest: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest.yaml", interval: 86400, path: ./rp/st.yaml}
+  Steam: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml", interval: 86400, path: ./rp/stm.yaml}
+  Game: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml", interval: 86400, path: ./rp/game.yaml}
+  YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml", interval: 86400, path: ./rp/ytb.yaml}
+  Bahamut: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml", interval: 86400, path: ./rp/baha.yaml}
+  BiliBili: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml", interval: 86400, path: ./rp/bili.yaml}
+  BiliBiliIntl: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/BiliBiliIntl/BiliBiliIntl.yaml", interval: 86400, path: ./rp/bilii.yaml}
+  ChinaMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml", interval: 86400, path: ./rp/cm.yaml}
+  GlobalMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.yaml", interval: 86400, path: ./rp/gm.yaml}
+  ProxyList: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.yaml", interval: 86400, path: ./rp/proxy.yaml}
+  ChinaDomain: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/ChinaDomain.list", interval: 86400, path: ./rp/cdn.yaml, format: text}
+  ChinaCompanyIp: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/tindy2013/subconverter/master/base/rules/ACL4SSR/Clash/ChinaCompanyIp.list", interval: 86400, path: ./rp/ccip.yaml, format: text}
+  Download: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml", interval: 86400, path: ./rp/dl.yaml}
+  China: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.yaml", interval: 86400, path: ./rp/china.yaml}
 
 # 规则
 rules:
