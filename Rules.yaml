@@ -197,7 +197,6 @@ rule-providers:
   ChinaMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml", interval: 86400, path: ./rp/cm.yaml}
   GlobalMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.yaml", interval: 86400, path: ./rp/gm.yaml}
   Proxy: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.yaml", interval: 86400, path: ./rp/proxy.yaml}
-  GFW: {type: http, behavior: domain, url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/refs/heads/release/gfw.txt", interval: 86400, path: ./rp/gfw.yaml}
   Download: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml", interval: 86400, path: ./rp/dl.yaml}
   China: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.yaml", interval: 86400, path: ./rp/china.yaml}
 
@@ -231,7 +230,6 @@ rules:
   - RULE-SET,ChinaMedia,🌏 国内媒体
   - RULE-SET,GlobalMedia,🌍 国外媒体
   - RULE-SET,Proxy,🚀 节点选择
-  - RULE-SET,GFW,🚀 节点选择
   - RULE-SET,Download,🎯 全球直连
   - RULE-SET,China,🎯 全球直连
   - GEOSITE,gfw,🚀 节点选择
