@@ -171,9 +171,14 @@ rule-providers:
 rules:
   - DOMAIN,rama991.siamparagon.org,DIRECT
   - GEOIP,lan,DIRECT,no-resolve
-  - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT
-  - RULE-SET,Privacy,REJECT
-  - GEOSITE,category-ads-all,REJECT
+  - GEOSITE,captive,DIRECT
+  - AND,((NETWORK,UDP),(DST-PORT,123)),DIRECT
+  - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT-DROP
+  - GEOSITE,category-ads-all,REJECT-DROP
+  - RULE-SET,Privacy,REJECT-DROP
+  - DOMAIN-KEYWORD,tracker,🎯 全球直连
+  - DOMAIN-KEYWORD,torrent,🎯 全球直连
+  - RULE-SET,Download,🎯 全球直连
   - RULE-SET,SteamCN,🎯 全球直连
   - RULE-SET,Steam,🎮 Steam
   - RULE-SET,Game,🎮 游戏平台
@@ -183,18 +188,17 @@ rules:
   - RULE-SET,ChinaMedia,🌏 国内媒体
   - RULE-SET,GlobalMedia,🌍 国外媒体
   - RULE-SET,GitHub,🏗️ GitHub
-  - GEOSITE,microsoft,Ⓜ️ Microsoft
   - GEOSITE,bing,🔍️ Copilot
+  - GEOSITE,microsoft,Ⓜ️ Microsoft
   - GEOSITE,category-ai-!cn,🤖 AI
   - RULE-SET,OpenRouter,🤖 AI
-  - GEOSITE,google,🔍️ Google
   - RULE-SET,GoogleFCM,📢 GoogleFCM
+  - GEOSITE,google,🔍️ Google
   - GEOSITE,apple,🍎 Apple
   - RULE-SET,OKX,🪙 OKX
   - GEOSITE,telegram,📲 Telegram
-  - GEOIP,telegram,📲 Telegram
+  - GEOIP,telegram,📲 Telegram,no-resolve
   - RULE-SET,Speedtest,♻️ Speedtest
-  - RULE-SET,Download,🎯 全球直连
   - GEOSITE,gfw,🚀 节点选择
   - GEOSITE,CN,🎯 全球直连
   - GEOIP,CN,🎯 全球直连,no-resolve
