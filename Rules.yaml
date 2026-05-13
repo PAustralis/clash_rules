@@ -170,7 +170,7 @@ rule-providers:
 # 规则
 rules:
   - DOMAIN,rama991.siamparagon.org,DIRECT
-  - GEOIP,lan,🎯 全球直连
+  - GEOIP,lan,🎯 全球直连,no-resolve
   - RULE-SET,Privacy,REJECT
   - GEOSITE,category-ads-all,REJECT
   - RULE-SET,SteamCN,🎯 全球直连
