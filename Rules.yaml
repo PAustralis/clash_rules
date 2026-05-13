@@ -171,7 +171,6 @@ rule-providers:
 rules:
   - DOMAIN,rama991.siamparagon.org,DIRECT
   - GEOIP,lan,DIRECT,no-resolve
-  - GEOSITE,captive,DIRECT
   - AND,((NETWORK,UDP),(DST-PORT,123)),DIRECT
   - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT-DROP
   - GEOSITE,category-ads-all,REJECT-DROP
