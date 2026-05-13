@@ -181,9 +181,9 @@ rules:
   - RULE-SET,Bahamut,📺 Bahamut
   - RULE-SET,ChinaMedia,🌏 国内媒体
   - RULE-SET,GlobalMedia,🌍 国外媒体
+  - RULE-SET,GitHub,🏗️ GitHub
   - GEOSITE,microsoft,Ⓜ️ Microsoft
   - GEOSITE,bing,🔍️ Copilot
-  - RULE-SET,GitHub,🏗️ GitHub
   - GEOSITE,category-ai-!cn,🤖 AI
   - RULE-SET,OpenRouter,🤖 AI
   - GEOSITE,google,🔍️ Google
