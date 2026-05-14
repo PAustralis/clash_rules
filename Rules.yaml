@@ -52,11 +52,9 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
     - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
   fallback:
-    - 8.8.8.8
-    - 1.1.1.1
-    - https://cloudflare-dns.com/dns-query
+    - tls://8.8.8.8:853
+    - tls://1.1.1.1:853
     - https://dns.google/dns-query
   fallback-filter:
     geoip: true
@@ -64,9 +62,15 @@ dns:
     ipcidr:
       - 240.0.0.0/4
   nameserver-policy:
-    "geosite:cn": https://dns.alidns.com/dns-query
-    "geosite:apple": https://dns.alidns.com/dns-query
-    "geosite:steam@cn": https://dns.alidns.com/dns-query
+    "geosite:cn":
+      - 223.5.5.5
+      - 119.29.29.29
+    "geosite:apple":
+      - 223.5.5.5
+      - 119.29.29.29
+    "geosite:steam@cn":
+      - 223.5.5.5
+      - 119.29.29.29
     
 # 订阅源
 proxy-providers:
