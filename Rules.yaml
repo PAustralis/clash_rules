@@ -62,15 +62,9 @@ dns:
     ipcidr:
       - 240.0.0.0/4
   nameserver-policy:
-    "geosite:cn":
-      - 223.5.5.5
-      - 119.29.29.29
-    "geosite:apple":
-      - 223.5.5.5
-      - 119.29.29.29
-    "geosite:steam@cn":
-      - 223.5.5.5
-      - 119.29.29.29
+    "geosite:cn": 223.5.5.5
+    "geosite:apple": 223.5.5.5
+    "geosite:steam@cn": 223.5.5.5
     
 # 订阅源
 proxy-providers:
