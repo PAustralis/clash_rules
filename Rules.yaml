@@ -171,10 +171,10 @@ rules:
   - GEOIP,lan,DIRECT,no-resolve
   - AND,((NETWORK,UDP),(DST-PORT,123)),DIRECT
   - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT-DROP
-  - GEOSITE,category-ads-all,REJECT-DROP
   - DOMAIN-KEYWORD,tracker,🎯 全球直连
   - DOMAIN-KEYWORD,torrent,🎯 全球直连
   - RULE-SET,Download,🎯 全球直连
+  - GEOSITE,category-ads-all,REJECT-DROP
   - RULE-SET,SteamCN,🎯 全球直连
   - RULE-SET,Steam,🎮 Steam
   - RULE-SET,Game,🎮 游戏平台
