@@ -62,8 +62,44 @@ dns:
     geoip-code: CN
     ipcidr:
       - 240.0.0.0/4
-  nameserver-policy: { 'geosite:cn,apple,private': [system, 119.29.29.29, 223.5.5.5], '*.sankuaei.com': ['https://anycast.bytecdns.com/913b04c3', 'https://anycast.soufunimgs.com/5428ab28', 'https://anycast.jllyzx.com/8c28d4s7', 'https://anycast.pzwzs.com/3b04c545', 'https://anycast.qccnb.com/a192b791', 'https://anycast.xhspic.com/8c28d4s7', 'https://91c7e35b.qluomcd.com:4443/5428ab28'], '*.aixifan7498.com': ['https://anycast.bytecdns.com/913b04c3', 'https://anycast.soufunimgs.com/5428ab28', 'https://anycast.jllyzx.com/8c28d4s7', 'https://anycast.pzwzs.com/3b04c545', 'https://anycast.qccnb.com/a192b791', 'https://anycast.xhspic.com/8c28d4s7', 'https://91c7e35b.qluomcd.com:4443/5428ab28'], '*.afdiancdn.org': ['https://anycast.bytecdns.com/913b04c3', 'https://anycast.soufunimgs.com/5428ab28', 'https://anycast.jllyzx.com/8c28d4s7', 'https://anycast.pzwzs.com/3b04c545', 'https://anycast.qccnb.com/a192b791', 'https://anycast.xhspic.com/8c28d4s7', 'https://91c7e35b.qluomcd.com:4443/5428ab28'] }
-    
+  nameserver-policy:
+    "geosite:cn":
+      - system
+      - 119.29.29.29
+      - 223.5.5.5
+    "geosite:apple":
+      - system
+      - 119.29.29.29
+      - 223.5.5.5
+    "geosite:private":
+      - system
+      - 119.29.29.29
+      - 223.5.5.5
+    "*.sankuaei.com":
+      - https://anycast.bytecdns.com/913b04c3
+      - https://anycast.soufunimgs.com/5428ab28
+      - https://anycast.jllyzx.com/8c28d4s7
+      - https://anycast.pzwzs.com/3b04c545
+      - https://anycast.qccnb.com/a192b791
+      - https://anycast.xhspic.com/8c28d4s7
+      - https://91c7e35b.qluomcd.com:4443/5428ab28
+    "*.aixifan7498.com":
+      - https://anycast.bytecdns.com/913b04c3
+      - https://anycast.soufunimgs.com/5428ab28
+      - https://anycast.jllyzx.com/8c28d4s7
+      - https://anycast.pzwzs.com/3b04c545
+      - https://anycast.qccnb.com/a192b791
+      - https://anycast.xhspic.com/8c28d4s7
+      - https://91c7e35b.qluomcd.com:4443/5428ab28
+    "*.afdiancdn.org":
+      - https://anycast.bytecdns.com/913b04c3
+      - https://anycast.soufunimgs.com/5428ab28
+      - https://anycast.jllyzx.com/8c28d4s7
+      - https://anycast.pzwzs.com/3b04c545
+      - https://anycast.qccnb.com/a192b791
+      - https://anycast.xhspic.com/8c28d4s7
+      - https://91c7e35b.qluomcd.com:4443/5428ab28
+  
 # 订阅源
 proxy-providers:
   GLaDOS:
