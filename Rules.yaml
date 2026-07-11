@@ -210,7 +210,7 @@ rule-providers:
 
 # 规则
 rules:
-  - DOMAIN,huaikhwang.central-world.org,DIRECT
+  - DOMAIN,huaikhwang.central-world.org,🇭🇰 香港故转
   - DOMAIN-SUFFIX,user.tagss14.pro,DIRECT
   - DOMAIN-SUFFIX,tagss.pro,🚀 节点选择
   - GEOIP,lan,DIRECT,no-resolve
