@@ -219,7 +219,6 @@ rules:
   - DOMAIN-KEYWORD,tracker,🎯 全球直连
   - DOMAIN-KEYWORD,torrent,🎯 全球直连
   - RULE-SET,Download,🎯 全球直连
-  - GEOSITE,category-ads-all,REJECT-DROP
   - RULE-SET,SteamCN,🎯 全球直连
   - RULE-SET,Steam,🎮 Steam
   - RULE-SET,Game,🎮 游戏平台
