@@ -210,7 +210,6 @@ rules:
   - DOMAIN-SUFFIX,tagweb.vip,DIRECT
   - DOMAIN-SUFFIX,tagss.pro,🚀 节点选择
   - GEOIP,lan,DIRECT,no-resolve
-  - GEOSITE,category-ads-all,REJECT-DROP
   - RULE-SET,AntiAd,REJECT-DROP
   - AND,((NETWORK,UDP),(DST-PORT,123)),DIRECT
   - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT-DROP
