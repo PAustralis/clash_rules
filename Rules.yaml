@@ -58,6 +58,7 @@ dns:
   fake-ip-range: 198.18.0.1/16
   listen: '0.0.0.0:7874'
   default-nameserver:
+    - 180.184.1.1
     - 223.5.5.5
     - 119.29.29.29
   fake-ip-filter:
@@ -84,6 +85,7 @@ dns:
     - 'dot.pub'
   nameserver:
     - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
   fallback:
     - https://dns.google/dns-query
     - tls://8.8.8.8:853
