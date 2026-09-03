@@ -16,15 +16,9 @@ sniffer:
     http: {ports: [80, 8080-8880]}
     quic: {ports: [443, 8443]}
 keep-alive-interval: 360
-cfw-bypass:
-    - localhost
-    - '127.*'
-    - '10.*'
-    - '192.168.*'
-    - '<local>'
 hosts:
   'mtalk.google.com': 108.177.125.188
-  'tagss13.pro': 104.26.5.84
+  'tagss14.pro': 104.26.5.84
   'tagss.pro': 104.26.4.238
 dns:
   enable: true
@@ -33,9 +27,7 @@ dns:
   fake-ip-range: 198.18.0.1/16
   listen: 0.0.0.0:53
   default-nameserver:
-    - 180.184.1.1
     - 223.5.5.5
-    - 119.29.29.29
   fake-ip-filter:
     - '*.lan'
     - '*.localdomain'
@@ -59,13 +51,10 @@ dns:
     - 'dns.pub'
     - 'dot.pub'
   nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
     - https://dns.alidns.com/dns-query
   fallback:
-    - tls://8.8.8.8:853
-    - tls://1.1.1.1:853
     - https://dns.google/dns-query
+    - tls://8.8.8.8:853
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -73,41 +62,11 @@ dns:
       - 240.0.0.0/4
   nameserver-policy:
     "geosite:cn":
-      - system
-      - 119.29.29.29
-      - 223.5.5.5
+    - https://dns.alidns.com/dns-query
     "geosite:apple":
-      - system
-      - 119.29.29.29
-      - 223.5.5.5
+    - https://dns.alidns.com/dns-query
     "geosite:private":
-      - system
-      - 119.29.29.29
-      - 223.5.5.5
-    "*.sankuaei.com":
-      - https://anycast.bytecdns.com/913b04c3
-      - https://anycast.soufunimgs.com/5428ab28
-      - https://anycast.jllyzx.com/8c28d4s7
-      - https://anycast.pzwzs.com/3b04c545
-      - https://anycast.qccnb.com/a192b791
-      - https://anycast.xhspic.com/8c28d4s7
-      - https://91c7e35b.qluomcd.com:4443/5428ab28
-    "*.aixifan7498.com":
-      - https://anycast.bytecdns.com/913b04c3
-      - https://anycast.soufunimgs.com/5428ab28
-      - https://anycast.jllyzx.com/8c28d4s7
-      - https://anycast.pzwzs.com/3b04c545
-      - https://anycast.qccnb.com/a192b791
-      - https://anycast.xhspic.com/8c28d4s7
-      - https://91c7e35b.qluomcd.com:4443/5428ab28
-    "*.afdiancdn.org":
-      - https://anycast.bytecdns.com/913b04c3
-      - https://anycast.soufunimgs.com/5428ab28
-      - https://anycast.jllyzx.com/8c28d4s7
-      - https://anycast.pzwzs.com/3b04c545
-      - https://anycast.qccnb.com/a192b791
-      - https://anycast.xhspic.com/8c28d4s7
-      - https://91c7e35b.qluomcd.com:4443/5428ab28
+    - https://dns.alidns.com/dns-query
   
 # 订阅源
 proxy-providers:
