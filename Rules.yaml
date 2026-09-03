@@ -1,7 +1,7 @@
 # 基础设置
 mixed-port: 7890
 allow-lan: true
-log-level: info
+log-level: warning
 external-controller: '127.0.0.1:9090'
 ipv6: false
 unified-delay: true
@@ -53,11 +53,13 @@ hosts:
 dns:
   enable: true
   ipv6: false
+  use-hosts: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  listen: 0.0.0.0:53
+  listen: '0.0.0.0:7874'
   default-nameserver:
     - 223.5.5.5
+    - 119.29.29.29
   fake-ip-filter:
     - '*.lan'
     - '*.localdomain'
@@ -97,6 +99,7 @@ dns:
     - https://dns.alidns.com/dns-query
     "geosite:private":
     - https://dns.alidns.com/dns-query
+  proxy-server-nameserver: ['udp://127.0.0.1:7874']
   
 # 订阅源
 proxy-providers:
