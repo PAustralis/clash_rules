@@ -17,7 +17,6 @@ sniffer:
     quic: {ports: [443, 8443]}
 keep-alive-interval: 360
 hosts:
-  'mtalk.google.com': 108.177.125.188
   'tagss14.pro': 104.26.5.84
   'tagss.pro': 104.26.4.238
   055c165d-3142-401f-a43e-6a2681e72517.afdiancdn.org: "03bc4a78-642b-4efa-9f56-911bc5cf94e0.portail-offres.top"
