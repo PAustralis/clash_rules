@@ -239,5 +239,6 @@ rules:
   - GEOSITE,gfw,🚀 节点选择
   - GEOSITE,CN,🎯 全球直连
   - GEOIP,CN,🎯 全球直连,no-resolve
+  - GEOIP,PRIVATE,🎯 全球直连,no-resolve
   - GEOSITE,geolocation-!cn,🚀 节点选择
   - MATCH,🐟 漏网之鱼
