@@ -66,11 +66,9 @@ dns:
     - https://doh.pub/dns-query
   nameserver-policy:
     '+.captive.apple.com,+.msftconnecttest.com,+.connect.rom.miui.com,+.connectivitycheck.gstatic.com,+.connectivitycheck.platform.hicloud.com':
-      - 'system://'
+    - https://223.5.5.5/dns-query
     'geosite:cn,apple,private':
-      - 'system://'
-      - 223.5.5.5
-      - 119.29.29.29
+    - https://223.5.5.5/dns-query
   fake-ip-filter:
     - '*.lan'
     - '*.localdomain'
