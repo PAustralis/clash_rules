@@ -1,0 +1,7 @@
+payload:
+  - DOMAIN-SUFFIX,aihubmix.com
+  - DOMAIN-SUFFIX,inferera.com
+  - DOMAIN-SUFFIX,api.aihubmix.com
+  - DOMAIN-SUFFIX,api.inferera.com
+  - DOMAIN-KEYWORD,aihubmix
+  - DOMAIN-KEYWORD,inferera
