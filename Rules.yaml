@@ -97,6 +97,11 @@ dns:
     - '+.chat.bilibili.com'
     - '+.feishu.cn'
     - '+.dingtalk.com'
+    # 驱动/硬件厂商官网：返回真实 IP，供本机工具直连官方源
+    - '+.intel.com'
+    - '+.nvidia.com'
+    - '+.geforce.com'
+    - '+.asus.com'
   proxy-server-nameserver:
     - 'udp://127.0.0.1:7874'
   
