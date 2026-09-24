@@ -153,21 +153,21 @@ proxy-providers:
     interval: 86400
     path: ./proxy-providers/glados.yaml
     exclude-filter: "(?i)(剩余|流量|套餐|订阅|到期|官网|重置|客服|网址|群组|邀请|Expire|Traffic)"
-    health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
+    health-check: {enable: true, interval: 3600, url: https://cp.cloudflare.com/generate_204}
   TAG:
     type: http
     url: "TAG_URL"
     interval: 86400
     path: ./proxy-providers/tag.yaml
     exclude-filter: "(?i)(剩余|流量|套餐|订阅|到期|官网|重置|客服|网址|群组|邀请|Expire|Traffic)"
-    health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
+    health-check: {enable: true, interval: 3600, url: https://cp.cloudflare.com/generate_204}
   Mojie:
     type: http
     url: "Mojie_URL&flag=clash"
     interval: 86400
     path: ./proxy-providers/mojie.yaml
     exclude-filter: "(?i)(剩余|流量|套餐|订阅|到期|官网|重置|客服|网址|群组|邀请|Expire|Traffic)"
-    health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
+    health-check: {enable: true, interval: 3600, url: https://cp.cloudflare.com/generate_204}
 
 # 策略组
 proxy-groups:
@@ -186,7 +186,7 @@ proxy-groups:
     use: [GLaDOS, Mojie]
     filter: "(?i)港|HK|Hong Kong|🇭🇰|HongKong"
     exclude-filter: "(?i)(深港|家宽|游戏|剩余|流量|0.5|0.5倍|0.5x|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x)"
-    url: http://cp.cloudflare.com/generate_204
+    url: https://cp.cloudflare.com/generate_204
     interval: 300
     lazy: true
 
@@ -195,7 +195,7 @@ proxy-groups:
     use: [GLaDOS, Mojie]
     filter: "(?i)台|新北|彰化|TW|Taiwan"
     exclude-filter: "(?i)(家宽|游戏|剩余|流量|0.5|0.5倍|0.5x|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x)"
-    url: http://cp.cloudflare.com/generate_204
+    url: https://cp.cloudflare.com/generate_204
     interval: 300
     lazy: true
 
@@ -204,7 +204,7 @@ proxy-groups:
     use: [GLaDOS, Mojie]
     filter: "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan"
     exclude-filter: "(?i)(家宽|游戏|剩余|流量|0.5|0.5倍|0.5x|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x)"
-    url: http://cp.cloudflare.com/generate_204
+    url: https://cp.cloudflare.com/generate_204
     interval: 300
     lazy: true
 
