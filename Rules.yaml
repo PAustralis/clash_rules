@@ -53,22 +53,64 @@ dns:
   enable: true
   ipv6: false
   listen: '0.0.0.0:7874'
+  cache-algorithm: arc
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  # blacklist（默认）：列在 fake-ip-filter 里的域名不下发假 IP、走真实解析
+  fake-ip-filter-mode: blacklist
+  use-hosts: true
+  use-system-hosts: true
+
+  # ① 只用来解析「下面这些 DNS 服务器自己的域名」，必须是纯 IP
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  use-hosts: true
-  use-system-hosts: true
-  nameserver:
+
+  # ② 解析机场节点域名。必须是不依赖代理就能连上的 DNS。
+  #    原来写 udp://127.0.0.1:7874 是绕内核自己的 DNS 口，结果等价但脆弱：
+  #    一旦 nameserver 改成走代理，解析节点域名就会变成死循环。
+  proxy-server-nameserver:
     - https://223.5.5.5/dns-query
     - https://doh.pub/dns-query
+
+  # ③ 命中 DIRECT 的域名用国内 DNS 解析
+  direct-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
+
+  # ④ 兜底上游：国内 DNS。disable-qtype-65 丢掉 HTTPS(SVCB) 记录查询，
+  #    减少查询量与泄露面
+  nameserver:
+    - https://223.5.5.5/dns-query#disable-qtype-65=true
+    - https://doh.pub/dns-query#disable-qtype-65=true
+
+  # ⑤ 污染检测：nameserver 解析出的结果如果不像国内 IP，就改用 fallback 的结果。
+  #    fallback 通过「🚀 节点选择」代理出去问 8.8.8.8，所以国内 DNS 看不到你在
+  #    解析哪些国外域名。代理挂掉时 fallback 失败会退回 nameserver 的结果，不会断网。
+  fallback:
+    - https://8.8.8.8/dns-query#🚀 节点选择
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+      - 127.0.0.1/32
+
+  # ⑥ 按域名指定上游。国内域名改用 rule-set 判断——和 fake-ip 过滤、路由规则
+  #    引用同一批规则集，三处口径一致（原来是 geosite:cn，和路由的 GEOSITE,CN
+  #    不是同一份数据源）
   nameserver-policy:
     '+.captive.apple.com,+.msftconnecttest.com,+.connect.rom.miui.com,+.connectivitycheck.gstatic.com,+.connectivitycheck.platform.hicloud.com':
     - https://223.5.5.5/dns-query
-    'geosite:cn,apple,private':
-    - https://223.5.5.5/dns-query
+    'rule-set:cn,private':
+    - https://223.5.5.5/dns-query#disable-qtype-65=true
+    - https://doh.pub/dns-query#disable-qtype-65=true
+
+  # ⑦ 不下发假 IP 的域名：规则集在前，手工补丁在后
   fake-ip-filter:
+    - 'rule-set:cn'
+    - 'rule-set:private'
     - '*.lan'
     - '*.localdomain'
     - '*.example'
@@ -102,9 +144,7 @@ dns:
     - '+.nvidia.com'
     - '+.geforce.com'
     - '+.asus.com'
-  proxy-server-nameserver:
-    - 'udp://127.0.0.1:7874'
-  
+
 # 订阅源
 proxy-providers:
   GLaDOS:
@@ -112,31 +152,34 @@ proxy-providers:
     url: "GLaDOS_URL"
     interval: 86400
     path: ./proxy-providers/glados.yaml
+    exclude-filter: "(?i)(剩余|流量|套餐|订阅|到期|官网|重置|客服|网址|群组|邀请|Expire|Traffic)"
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
   TAG:
     type: http
     url: "TAG_URL"
     interval: 86400
     path: ./proxy-providers/tag.yaml
+    exclude-filter: "(?i)(剩余|流量|套餐|订阅|到期|官网|重置|客服|网址|群组|邀请|Expire|Traffic)"
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
   Mojie:
     type: http
     url: "Mojie_URL&flag=clash"
     interval: 86400
     path: ./proxy-providers/mojie.yaml
+    exclude-filter: "(?i)(剩余|流量|套餐|订阅|到期|官网|重置|客服|网址|群组|邀请|Expire|Traffic)"
     health-check: {enable: true, interval: 3600, url: http://cp.cloudflare.com/generate_204}
 
 # 策略组
 proxy-groups:
-  - {name: 🚀 手动切换, type: select, use: [GLaDOS, TAG, Mojie]}
-  - {name: 🇭🇰 香港节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(港|HK|Hong Kong|🇭🇰|HongKong)"}
-  - {name: 🇨🇳 台湾节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(台|新北|彰化|TW|Taiwan)"}
-  - {name: 🇸🇬 狮城节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(新加坡|坡|狮城|SG|Singapore)"}
-  - {name: 🇯🇵 日本节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)"}
-  - {name: 🇺🇲 美国节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)"}
-  - {name: 🇰🇷 韩国节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(KR|Korea|KOR|首尔|韩|韓)"}
-  - {name: 🏡 家宽节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(家宽|家庭)"}
-  - {name: 🎥 奈飞节点, type: select, use: [GLaDOS, TAG, Mojie], filter: "(?i)(NF|奈飞|解锁|Netflix|NETFLIX|Media)"}
+  - {name: 🚀 手动切换, type: select, include-all: true}
+  - {name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(?i)(港|HK|Hong Kong|🇭🇰|HongKong)"}
+  - {name: 🇨🇳 台湾节点, type: select, include-all: true, filter: "(?i)(台|新北|彰化|TW|Taiwan)"}
+  - {name: 🇸🇬 狮城节点, type: select, include-all: true, filter: "(?i)(新加坡|坡|狮城|SG|Singapore)"}
+  - {name: 🇯🇵 日本节点, type: select, include-all: true, filter: "(?i)(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)"}
+  - {name: 🇺🇲 美国节点, type: select, include-all: true, filter: "(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)"}
+  - {name: 🇰🇷 韩国节点, type: select, include-all: true, filter: "(?i)(KR|Korea|KOR|首尔|韩|韓)"}
+  - {name: 🏡 家宽节点, type: select, include-all: true, filter: "(?i)(家宽|家庭)"}
+  - {name: 🎥 奈飞节点, type: select, include-all: true, filter: "(?i)(NF|奈飞|解锁|Netflix|NETFLIX|Media)"}
 
   - name: 🇭🇰 香港故转
     type: fallback
@@ -188,23 +231,55 @@ proxy-groups:
   - {name: 🐟 漏网之鱼, type: select, proxies: [🎯 全球直连, 🚀 节点选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 🇭🇰 香港故转, 🇨🇳 台湾故转, 🇯🇵 日本故转, 🏡 家宽节点, 🚀 手动切换]}
   
 # 规则集
+# YAML 锚点容器：名字随便起（博主叫 rule-anchor），mihomo 会忽略这个 key，
+# 真正起作用的是 YAML 自己的 &锚点 / << 合并语法
+rule-anchor:
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  domain_text: &domain_text {type: http, interval: 86400, behavior: domain, format: text}
+  ipcidr: &ipcidr {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  classical: &classical {type: http, interval: 86400, behavior: classical, format: yaml}
+
 rule-providers:
-  AntiAd: {type: http, behavior: domain, url: "https://anti-ad.net/clash.yaml", interval: 86400, path: ./rp/antiad.yaml}
-  SteamCN: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml", interval: 86400, path: ./rp/scn.yaml}
-  GitHub: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml", interval: 86400, path: ./rp/gh.yaml}
-  OpenRouter: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/Openrouter.yaml", interval: 86400, path: ./rp/mop.yaml}
-  AIHubMix: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/AIHubMix.yaml", interval: 86400, path: ./rp/ahm.yaml}
-  OKX: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OKX/OKX.yaml", interval: 86400, path: ./rp/okx.yaml}
-  GoogleFCM: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.yaml", interval: 86400, path: ./rp/fcm.yaml}
-  Speedtest: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest.yaml", interval: 86400, path: ./rp/st.yaml}
-  Steam: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml", interval: 86400, path: ./rp/stm.yaml}
-  Game: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml", interval: 86400, path: ./rp/game.yaml}
-  YouTube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml", interval: 86400, path: ./rp/ytb.yaml}
-  Bahamut: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml", interval: 86400, path: ./rp/baha.yaml}
-  BiliBili: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml", interval: 86400, path: ./rp/bili.yaml}
-  ChinaMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml", interval: 86400, path: ./rp/cm.yaml}
-  GlobalMedia: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.yaml", interval: 86400, path: ./rp/gm.yaml}
-  Download: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml", interval: 86400, path: ./rp/dl.yaml}
+  # ── DNS 用：nameserver-policy 和 fake-ip-filter 都引用 ──
+  cn: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs", path: ./rp/cn.mrs}
+  private: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs", path: ./rp/private.mrs}
+
+  # ── 广告拦截：纯文本 domains.txt，省掉每次启动解析 2.7MB YAML ──
+  AntiAd: {<<: *domain_text, url: "https://anti-ad.net/domains.txt", path: ./rp/antiad.txt}
+
+  # ── 内容分流 ──
+  GitHub: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs", path: ./rp/gh.mrs}
+  YouTube: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs", path: ./rp/ytb.mrs}
+  Steam: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs", path: ./rp/stm.mrs}
+  SteamCN: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam@cn.mrs", path: ./rp/scn.mrs}
+  Game: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games.mrs", path: ./rp/game.mrs}
+  BiliBili: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bilibili.mrs", path: ./rp/bili.mrs}
+  Bahamut: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bahamut.mrs", path: ./rp/baha.mrs}
+  ChinaMedia: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-media-cn.mrs", path: ./rp/cm.mrs}
+  GlobalMedia: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-media.mrs", path: ./rp/gm.mrs}
+  OKX: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/okx.mrs", path: ./rp/okx.mrs}
+  GoogleFCM: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/googlefcm.mrs", path: ./rp/fcm.mrs}
+  Speedtest: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/speedtest.mrs", path: ./rp/st.mrs}
+
+  # ── 原来走 GeoSite.dat 的，现在同源成 rule-set（启动不再加载 GeoSite.dat） ──
+  bing: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bing.mrs", path: ./rp/bing.mrs}
+  microsoft: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs", path: ./rp/ms.mrs}
+  ai: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs", path: ./rp/ai.mrs}
+  google: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs", path: ./rp/goog.mrs}
+  apple: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs", path: ./rp/apple.mrs}
+  telegram: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs", path: ./rp/tg.mrs}
+  gfw: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/gfw.mrs", path: ./rp/gfw.mrs}
+  ncn: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs", path: ./rp/ncn.mrs}
+
+  # ── 原来走 GeoIP.dat 的，同样换成 ipcidr 的 mrs ──
+  cn_ip: {<<: *ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs", path: ./rp/cn_ip.mrs}
+  private_ip: {<<: *ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs", path: ./rp/private_ip.mrs}
+  telegram_ip: {<<: *ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs", path: ./rp/tg_ip.mrs}
+
+  # ── 保持 classical 的：自建列表 / meta 没有语义对应的分类 ──
+  OpenRouter: {<<: *classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/Openrouter.yaml", path: ./rp/mop.yaml}
+  AIHubMix: {<<: *classical, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/AIHubMix.yaml", path: ./rp/ahm.yaml}
+  Download: {<<: *classical, url: "https://raw.githubusercontent.com/blackMatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml", path: ./rp/dl.yaml}
 
 # 规则
 rules:
@@ -213,11 +288,13 @@ rules:
   - DOMAIN-SUFFIX,tagxx.vip,DIRECT
   - DOMAIN-SUFFIX,tagweb.vip,DIRECT
   - DOMAIN-SUFFIX,tagss.pro,🚀 节点选择
-  - GEOIP,lan,DIRECT,no-resolve
-  - RULE-SET,AntiAd,REJECT-DROP
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,AntiAd,REJECT
   - AND,((NETWORK,UDP),(DST-PORT,123)),DIRECT
-  - AND,((NETWORK,UDP),(GEOIP,CN),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),DIRECT
-  - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT-DROP
+  # 国内域名的 QUIC 放行（用域名规则集判断；fake-ip 下 GEOIP,CN 判不中）
+  - AND,((RULE-SET,cn),(NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),DIRECT
+  # 其余 QUIC 一律拒绝，逼浏览器回退 TCP（REJECT 比 REJECT-DROP 回退更快）
+  - AND,((NETWORK,UDP),(OR,((DST-PORT,443),(DST-PORT,4483),(DST-PORT,9305)))),REJECT
   - DOMAIN-KEYWORD,tracker,🎯 全球直连
   - DOMAIN-KEYWORD,torrent,🎯 全球直连
   - RULE-SET,Download,🎯 全球直连
@@ -227,24 +304,24 @@ rules:
   - RULE-SET,BiliBili,📺 哔哩哔哩
   - RULE-SET,YouTube,📺 Youtube
   - RULE-SET,Bahamut,📺 Bahamut
-  - RULE-SET,ChinaMedia,🌏 国内媒体
-  - RULE-SET,GlobalMedia,🌍 国外媒体
   - RULE-SET,GitHub,🏗️ GitHub
-  - GEOSITE,bing,🔍️ Copilot
-  - GEOSITE,microsoft,Ⓜ️ Microsoft
-  - GEOSITE,category-ai-!cn,🤖 AI
+  - RULE-SET,bing,🔍️ Copilot
+  - RULE-SET,microsoft,Ⓜ️ Microsoft
+  - RULE-SET,ai,🤖 AI
   - RULE-SET,OpenRouter,🤖 AI
   - RULE-SET,AIHubMix,🤖 AI
   - RULE-SET,GoogleFCM,📢 GoogleFCM
-  - GEOSITE,google,🔍️ Google
-  - GEOSITE,apple,🍎 Apple
+  - RULE-SET,google,🔍️ Google
+  - RULE-SET,apple,🍎 Apple
   - RULE-SET,OKX,🪙 OKX
-  - GEOSITE,telegram,📲 Telegram
-  - GEOIP,telegram,📲 Telegram,no-resolve
+  - RULE-SET,telegram,📲 Telegram
+  - RULE-SET,telegram_ip,📲 Telegram,no-resolve
   - RULE-SET,Speedtest,♻️ Speedtest
-  - GEOSITE,gfw,🚀 节点选择
-  - GEOSITE,CN,🎯 全球直连
-  - GEOIP,CN,🎯 全球直连,no-resolve
-  - GEOIP,PRIVATE,🎯 全球直连,no-resolve
-  - GEOSITE,geolocation-!cn,🚀 节点选择
+  - RULE-SET,ChinaMedia,🌏 国内媒体
+  - RULE-SET,GlobalMedia,🌍 国外媒体
+  - RULE-SET,gfw,🚀 节点选择
+  - RULE-SET,cn,🎯 全球直连
+  - RULE-SET,cn_ip,🎯 全球直连,no-resolve
+  - RULE-SET,private_ip,🎯 全球直连,no-resolve
+  - RULE-SET,ncn,🚀 节点选择
   - MATCH,🐟 漏网之鱼
