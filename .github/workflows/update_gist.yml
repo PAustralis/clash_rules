@@ -24,6 +24,24 @@ jobs:
           sed -i "s|TAG_URL|$ESC_TAG|g" final_config.yaml
           sed -i "s|Mojie_URL|$ESC_MOJIE|g" final_config.yaml
 
+      # ── 以下两步是新增的：校验不过就不推 Gist ──
+
+      - name: Ensure PyYAML
+        run: python3 -c "import yaml" 2>/dev/null || python3 -m pip install --quiet --break-system-packages pyyaml
+
+      - name: Validate config structure
+        run: python3 .github/scripts/validate_config.py final_config.yaml
+
+      - name: Validate config with mihomo core
+        run: |
+          set -e
+          # 版本可自行上调；compatible 版对 CI 机器的 CPU 指令集要求最低
+          VERSION=v1.19.31
+          curl -sL -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${VERSION}/mihomo-linux-amd64-compatible-${VERSION}.gz"
+          gunzip -f mihomo.gz
+          chmod +x mihomo
+          ./mihomo -t -d . -f final_config.yaml
+
       - name: Update Gist
         run: |
           python3 -c "
