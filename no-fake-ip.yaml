@@ -1,0 +1,39 @@
+# 强制真实解析（不下发假 IP）的域名清单。
+# 被 Rules.yaml 的 dns.fake-ip-filter 以 `rule-set:NoFakeIP` 引用（behavior: domain / format: yaml）。
+# 通配符模式（*.lan、stun.*.* 这类）不放这里：domain 行为只认精确域名与 `+.` 前缀，
+# 那些模式留在 Rules.yaml 的 fake-ip-filter 本体里。
+payload:
+  # ── DSH / Harness 生态：DSH 网页抓取拒绝非公网 IP，这些域名必须给真实 IP ──
+  - 'registry.npmjs.org'
+  - 'registry.yarnpkg.com'
+  - 'api.npms.io'
+  - '+.awesome-dsh-plugin.com'
+  - 'dsh.market'
+  - '+.dshfind.com'
+  - '+.deepseek1024.com'
+  # ── GitHub 内容分发（README / 源码包 / API）──
+  - 'api.github.com'
+  - 'raw.githubusercontent.com'
+  - 'gist.githubusercontent.com'
+  - 'codeload.github.com'
+  - 'objects.githubusercontent.com'
+  - 'avatars.githubusercontent.com'
+  # ── 原 Rules.yaml 内联清单迁入（2026-10-01 精简）──
+  - '+.msftconnecttest.com'
+  - '+.msftncsi.com'
+  - 'captive.apple.com'
+  - 'connect.rom.miui.com'
+  - 'connectivitycheck.platform.hicloud.com'
+  - 'pool.ntp.org'
+  - '+.definition-meaning.top'
+  - '+.sfr-bouygues.cloud'
+  - '+.portail-offres.top'
+  - '+.bilivideo.com'
+  - '+.douyinvod.com'
+  - '+.chat.bilibili.com'
+  - '+.feishu.cn'
+  - '+.dingtalk.com'
+  - '+.intel.com'
+  - '+.nvidia.com'
+  - '+.geforce.com'
+  - '+.asus.com'
