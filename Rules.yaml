@@ -105,6 +105,8 @@ dns:
     - 'rule-set:cn'
     - 'rule-set:private'
     - 'rule-set:NoFakeIP'
+    # GitHub 系有现成 mrs(geosite/github),整站走真实解析;实测 sniffer 仍能命中 GitHub 规则组
+    - 'rule-set:GitHub'
     - '*.lan'
     - '*.localdomain'
     - '*.example'
