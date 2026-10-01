@@ -94,20 +94,21 @@ dns:
   nameserver-policy:
     '+.captive.apple.com,+.msftconnecttest.com,+.connect.rom.miui.com,+.connectivitycheck.gstatic.com,+.connectivitycheck.platform.hicloud.com':
     - https://223.5.5.5/dns-query
-    'rule-set:cn,private':
+    'rule-set:cn,private,cn_domain,private_domain':
     - https://223.5.5.5/dns-query#disable-qtype-65=true
     - https://doh.pub/dns-query#disable-qtype-65=true
 
   # 不下发假 IP 的域名
-  # 具体域名清单集中维护在 no-fake-ip.yaml（rule-providers: NoFakeIP）；
-  # 这里只留规则集引用与通配符模式，因为 domain 行为只认精确域名与 +. 前缀。
+  # 具名域名清单维护在 no-fake-ip.yaml(rule-providers: NoFakeIP)
   fake-ip-filter:
     - 'rule-set:cn'
     - 'rule-set:private'
-    # 自维护清单:单独维护在 no-fake-ip.yaml,由 gist 下发(不经 jsdelivr,推送后即时生效)
+    # 自维护清单见 no-fake-ip.yaml(provider: NoFakeIP)
     - 'rule-set:NoFakeIP'
-    # GitHub 系有现成 mrs(geosite/github),整站走真实解析;实测 sniffer 仍能命中 GitHub 规则组
+    # GitHub 系用现成 mrs(geosite/github)
     - 'rule-set:GitHub'
+    - 'rule-set:cn_domain'
+    - 'rule-set:private_domain'
     - '*.lan'
     - '*.localdomain'
     - '*.example'
@@ -227,6 +228,8 @@ rule-providers:
   # DNS 用
   cn: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs", path: ./rp/cn.mrs}
   private: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs", path: ./rp/private.mrs}
+  cn_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs", path: ./rp/cn_domain.mrs}
+  private_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs", path: ./rp/private_domain.mrs}
   NoFakeIP: {<<: *domain_yaml, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/no-fake-ip.yaml", path: ./rp/nofakeip.yaml}
 
   # 广告拦截
@@ -266,6 +269,7 @@ rule-providers:
 
 # 规则
 rules:
+  - RULE-SET,private_domain,🎯 全球直连
   - DOMAIN,huaikhwang.central-world.org,DIRECT
   - DOMAIN-SUFFIX,user.tagss14.pro,DIRECT
   - DOMAIN-SUFFIX,tagxx.vip,DIRECT
