@@ -38,4 +38,4 @@ payload:
   - '+.geforce.com'
   - '+.asus.com'
   # 临时探针:验证 rule-provider 是否支持中段通配符(测完即删)
-  - 'test-wildcard.*.example'
+  - 'test-wildcard.*.com'
