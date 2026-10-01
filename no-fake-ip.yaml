@@ -1,30 +1,64 @@
-# 强制真实解析（不下发假 IP）的域名清单。
-# 被 Rules.yaml 的 dns.fake-ip-filter 以 `rule-set:NoFakeIP` 引用（behavior: domain / format: yaml）。
-# 通配符模式（*.lan、stun.*.* 这类）不放这里：domain 行为只认精确域名与 `+.` 前缀，
-# 那些模式留在 Rules.yaml 的 fake-ip-filter 本体里。
+# 强制真实解析(不下发假 IP)的域名清单 —— 被 Rules.yaml 的 dns.fake-ip-filter
+# 以 `rule-set:NoFakeIP` 引用(behavior: domain / format: yaml)。
+# 只放"DSH 自己要抓"的域名:普通浏览走假 IP 完全没问题,只有 DSH 的 web_fetch
+# 会因为解析到非公网 IP 而拒抓(WEB_BLOCKED_URL)。通配符模式(*.lan / stun.*.*)
+# 规则集不吃,留在 Rules.yaml 的 fake-ip-filter 本体里。
 payload:
-  # ── DSH / Harness 生态：DSH 网页抓取拒绝非公网 IP，这些域名必须给真实 IP ──
-  - 'registry.npmjs.org'
-  - 'registry.yarnpkg.com'
-  - 'api.npms.io'
+  # ── DSH / 插件市场 ──
   - '+.awesome-dsh-plugin.com'
   - 'dsh.market'
   - '+.dshfind.com'
   - '+.deepseek1024.com'
-  # ── GitHub 内容分发（README / 源码包 / API）──
+  # ── 包与源码托管 ──
+  - 'registry.npmjs.org'
+  - 'registry.yarnpkg.com'
+  - 'npmjs.com'
+  - 'api.npms.io'
+  - 'unpkg.com'
+  - '+.jsdelivr.net'
+  - 'pypi.org'
+  - 'files.pythonhosted.org'
+  - 'crates.io'
+  - 'static.crates.io'
+  - 'index.crates.io'
+  - 'proxy.golang.org'
+  - 'sum.golang.org'
+  - 'pkg.go.dev'
+  - 'repo1.maven.org'
+  - 'registry-1.docker.io'
+  - 'auth.docker.io'
+  - 'production.cloudflare.docker.com'
+  - 'huggingface.co'
+  - 'cdn-lfs.huggingface.co'
+  - '+.gitee.com'
+  # ── GitHub(rule-set:GitHub 覆盖大部分,这里只留实测会抓的)──
   - 'api.github.com'
-  - 'raw.githubusercontent.com'
-  - 'gist.githubusercontent.com'
+  - '+.githubusercontent.com'
   - 'codeload.github.com'
-  - 'objects.githubusercontent.com'
-  - 'avatars.githubusercontent.com'
-  # ── 原 Rules.yaml 内联清单迁入（2026-10-01 精简）──
+  # ── 模型 / 文档 / 科研 ──
+  - '+.deepseek.com'
+  - 'api-docs.deepseek.com'
+  - 'ollama.com'
+  - 'lmstudio.ai'
+  - 'nodejs.org'
+  - 'docs.python.org'
+  - 'developer.mozilla.org'
+  - 'doc.rust-lang.org'
+  - 'docs.rs'
+  - 'kubernetes.io'
+  - 'stackoverflow.com'
+  - '+.wikipedia.org'
+  - 'arxiv.org'
+  - 'pubmed.ncbi.nlm.nih.gov'
+  - 'www.ncbi.nlm.nih.gov'
+  # ── 系统探测 / 时间同步 ──
   - '+.msftconnecttest.com'
   - '+.msftncsi.com'
   - 'captive.apple.com'
   - 'connect.rom.miui.com'
   - 'connectivitycheck.platform.hicloud.com'
   - 'pool.ntp.org'
+  # ── 由 Rules.yaml 内联迁入(订阅/机场/硬件官网)──
   - '+.definition-meaning.top'
   - '+.sfr-bouygues.cloud'
   - '+.portail-offres.top'
