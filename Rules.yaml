@@ -104,7 +104,38 @@ dns:
   fake-ip-filter:
     - 'rule-set:cn'
     - 'rule-set:private'
-    - 'rule-set:NoFakeIP'
+    # 自维护清单已内联:走 gist 即时生效,不再经 jsdelivr 的 @main 缓存
+    - 'registry.npmjs.org'
+    - 'registry.yarnpkg.com'
+    - 'api.npms.io'
+    - '+.awesome-dsh-plugin.com'
+    - 'dsh.market'
+    - '+.dshfind.com'
+    - '+.deepseek1024.com'
+    - 'api.github.com'
+    - 'raw.githubusercontent.com'
+    - 'gist.githubusercontent.com'
+    - 'codeload.github.com'
+    - 'objects.githubusercontent.com'
+    - 'avatars.githubusercontent.com'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - 'captive.apple.com'
+    - 'connect.rom.miui.com'
+    - 'connectivitycheck.platform.hicloud.com'
+    - 'pool.ntp.org'
+    - '+.definition-meaning.top'
+    - '+.sfr-bouygues.cloud'
+    - '+.portail-offres.top'
+    - '+.bilivideo.com'
+    - '+.douyinvod.com'
+    - '+.chat.bilibili.com'
+    - '+.feishu.cn'
+    - '+.dingtalk.com'
+    - '+.intel.com'
+    - '+.nvidia.com'
+    - '+.geforce.com'
+    - '+.asus.com'
     # GitHub 系有现成 mrs(geosite/github),整站走真实解析;实测 sniffer 仍能命中 GitHub 规则组
     - 'rule-set:GitHub'
     - '*.lan'
@@ -217,7 +248,6 @@ proxy-groups:
 # 锚点容器：mihomo 不认这个键，只用来放下面复用的 &锚点
 rule-anchor:
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
-  domain_yaml: &domain_yaml {type: http, interval: 86400, behavior: domain, format: yaml}
   domain_text: &domain_text {type: http, interval: 86400, behavior: domain, format: text}
   ipcidr: &ipcidr {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   classical: &classical {type: http, interval: 86400, behavior: classical, format: yaml}
@@ -226,7 +256,6 @@ rule-providers:
   # DNS 用
   cn: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs", path: ./rp/cn.mrs}
   private: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs", path: ./rp/private.mrs}
-  NoFakeIP: {<<: *domain_yaml, url: "https://testingcf.jsdelivr.net/gh/PAustralis/clash_rules@main/no-fake-ip.yaml", path: ./rp/nofakeip.yaml}
 
   # 广告拦截
   AntiAd: {<<: *domain_text, url: "https://anti-ad.net/domains.txt", path: ./rp/antiad.txt}
