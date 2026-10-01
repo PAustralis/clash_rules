@@ -99,7 +99,8 @@ dns:
     - https://doh.pub/dns-query#disable-qtype-65=true
 
   # 不下发假 IP 的域名
-  # 通配符模式必须留在本体(domain 行为的规则集不吃通配符);具体域名已内联在下方。?
+  # 具体域名清单集中维护在 no-fake-ip.yaml（rule-providers: NoFakeIP）；
+  # 这里只留规则集引用与通配符模式，因为 domain 行为只认精确域名与 +. 前缀。
   fake-ip-filter:
     - 'rule-set:cn'
     - 'rule-set:private'
