@@ -4,8 +4,6 @@ on:
   push:
     paths:
       - 'Rules.yaml'
-      - 'no-fake-ip.yaml'
-      - '.github/workflows/update_gist.yml'
   workflow_dispatch:
 
 jobs:
