@@ -99,9 +99,12 @@ dns:
     - https://doh.pub/dns-query#disable-qtype-65=true
 
   # 不下发假 IP 的域名
+  # 具体域名清单集中维护在 no-fake-ip.yaml（rule-providers: NoFakeIP）；
+  # 这里只留规则集引用与通配符模式，因为 domain 行为只认精确域名与 +. 前缀。
   fake-ip-filter:
     - 'rule-set:cn'
     - 'rule-set:private'
+    - 'rule-set:NoFakeIP'
     - '*.lan'
     - '*.localdomain'
     - '*.example'
@@ -110,31 +113,12 @@ dns:
     - '*.test'
     - '*.local'
     - '*.home.arpa'
-    - '+.msftconnecttest.com'
-    - '+.msftncsi.com'
-    - captive.apple.com
-    - connect.rom.miui.com
-    - connectivitycheck.platform.hicloud.com
     - 'stun.*.*'
     - 'stun.*.*.*'
     - 'time.*.com'
     - 'time.*.gov'
     - 'time.*.edu.cn'
     - 'ntp.*.com'
-    - pool.ntp.org
-    - '+.definition-meaning.top'
-    - '+.sfr-bouygues.cloud'
-    - '+.portail-offres.top'
-    - '+.bilivideo.com'
-    - '+.douyinvod.com'
-    - '+.chat.bilibili.com'
-    - '+.feishu.cn'
-    - '+.dingtalk.com'
-    # 驱动/硬件厂商官网
-    - '+.intel.com'
-    - '+.nvidia.com'
-    - '+.geforce.com'
-    - '+.asus.com'
 
 # 订阅源
 proxy-providers:
@@ -231,6 +215,7 @@ proxy-groups:
 # 锚点容器：mihomo 不认这个键，只用来放下面复用的 &锚点
 rule-anchor:
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  domain_yaml: &domain_yaml {type: http, interval: 86400, behavior: domain, format: yaml}
   domain_text: &domain_text {type: http, interval: 86400, behavior: domain, format: text}
   ipcidr: &ipcidr {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   classical: &classical {type: http, interval: 86400, behavior: classical, format: yaml}
@@ -239,6 +224,7 @@ rule-providers:
   # DNS 用
   cn: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs", path: ./rp/cn.mrs}
   private: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs", path: ./rp/private.mrs}
+  NoFakeIP: {<<: *domain_yaml, url: "https://testingcf.jsdelivr.net/gh/PAustralis/clash_rules@main/no-fake-ip.yaml", path: ./rp/nofakeip.yaml}
 
   # 广告拦截
   AntiAd: {<<: *domain_text, url: "https://anti-ad.net/domains.txt", path: ./rp/antiad.txt}
