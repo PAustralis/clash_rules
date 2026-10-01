@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - 'Rules.yaml'
+      - 'no-fake-ip.yaml'
+      - '.github/workflows/update_gist.yml'
+      - 'no-fake-ip.yaml'
+      - '.github/workflows/update_gist.yml'
   workflow_dispatch:
 
 jobs:
@@ -51,7 +55,9 @@ jobs:
           with open('final_config.yaml', 'r') as f:
               content = f.read()
           headers = {'Authorization': f'token {token}', 'Accept': 'application/vnd.github.v3+json'}
-          data = {'files': {'config.yaml': {'content': content}}}
+          with open('no-fake-ip.yaml', 'r') as f:
+              provider = f.read()
+          data = {'files': {'config.yaml': {'content': content}, 'no-fake-ip.yaml': {'content': provider}}}
           r = requests.patch(f'https://api.github.com/gists/{gist_id}', headers=headers, data=json.dumps(data))
           if r.status_code == 200:
               print('Success!')
