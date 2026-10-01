@@ -56,7 +56,7 @@ jobs:
           if r.status_code == 200:
               print('Success!')
           else:
-              print(f'Error: {r.status_code}, {r.text}')
+              print(f'Error: {r.status_code}')
               exit(1)
           "
         env:
