@@ -228,8 +228,6 @@ rule-providers:
   cn: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs", path: ./rp/cn.mrs}
   private: {<<: *domain, url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs", path: ./rp/private.mrs}
   NoFakeIP: {<<: *domain_yaml, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/no-fake-ip.yaml", path: ./rp/nofakeip.yaml}
-  # 探针(未被任何规则引用):验证内核能否直接抓 raw.githubusercontent.com,验证后可删
-  RawProbe: {<<: *domain_yaml, url: "https://raw.githubusercontent.com/PAustralis/clash_rules/main/Openrouter.yaml", path: ./rp/rawprobe.yaml}
 
   # 广告拦截
   AntiAd: {<<: *domain_text, url: "https://anti-ad.net/domains.txt", path: ./rp/antiad.txt}
